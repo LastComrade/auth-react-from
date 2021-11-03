@@ -34,7 +34,9 @@ const authCont = {
   },
   login: async (req, res) => {
     try {
-      const { email, password } = req.body;
+      let { email } = req.body;
+      const { password } = req.body;
+      email = email.trim();
       await User.findOne({ email }, async (err, user) => {
         if (err) {
           return res

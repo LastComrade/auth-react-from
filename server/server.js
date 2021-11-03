@@ -1,12 +1,15 @@
+// For environment variables in development
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
+// Package imports
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const routes = require("./routes");
 
+// Environment variables
 const port = process.env.PORT || 5000;
 const app = express();
 const DB_URL = process.env.DB_URL;
