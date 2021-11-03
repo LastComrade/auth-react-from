@@ -1,5 +1,22 @@
 {
   "dependencies": {
-    "express": "^4.17.1"
-  }
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.12"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.14"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "name": "testapi",
+  "version": "1.0.0",
+  "main": "server.js",
+  "author": "Konark Lohat",
+  "license": "ISC",
+  "description": ""
 }
