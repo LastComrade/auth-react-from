@@ -5,6 +5,7 @@ if (process.env.NODE_ENV !== "production") {
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const routes = require("./routes");
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -16,11 +17,16 @@ const corsOptions = {
   method: ["GET", "POST"],
 };
 
+// Establishing mongoose connection
 main().catch((err) => console.log(err));
-
 async function main() {
   await mongoose.connect(DB_URL);
 }
+
+// Midlewares
+app.use(cors(corsOptions)); // CORS policy
+app.use(express.json()); // Parses incoming requests with JSON payloads
+app.use("/api", routes);
 
 // For 404 Page Not Found route!
 app.get("*", (req, res) => {
