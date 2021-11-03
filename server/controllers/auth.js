@@ -27,6 +27,9 @@ const authCont = {
           console.log(err);
         });
     } catch (err) {
+      return res
+        .status(500)
+        .send("Something went wrong. Please try again later");
       console.log(err);
     }
   },
@@ -63,11 +66,43 @@ const authCont = {
           console.log(err);
         });
     } catch (err) {
+      return res
+        .status(500)
+        .send("Something went wrong. Please try again later");
       console.log(err);
     }
   },
   getUser: (req, res) => {
-    return null;
+    try {
+      const bearerHeader = req.headers["authorization"];
+      if (typeof bearerHeader !== "undefined") {
+        const token = bearerHeader.split(" ")[1];
+        jwt.verify(token, process.env.JWT_SECRET, async (err, authData) => {
+          if (err) {
+            return res
+              .status(403)
+              .json({ message: "Invalid token. Please login again" });
+          } else if (authData) {
+            await User.findById(authData.id, (err, user) => {
+              user.password = undefined;
+              return res.status(200).json({
+                message: "Token verified",
+                user,
+              });
+            })
+              .clone()
+              .catch(function (err) {
+                console.log(err);
+              });
+          }
+        });
+      }
+    } catch (err) {
+      return res
+        .status(500)
+        .send("Something went wrong. Please try again later");
+      console.log(err);
+    }
   },
 };
 
