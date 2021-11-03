@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Select from "react-select";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const categories = [
   { value: "startup", label: "Startup" },
@@ -20,10 +21,10 @@ const Form = () => {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [email, setEmail] = useState("");
-  const [category, setCategory] = useState("startup");
+  const [category, setCategory] = useState(categories[0]);
   const [prefStack, setPrefStack] = useState("");
   const [documented, setDocumented] = useState(true);
-  const [budget, setBudget] = useState("< 1K USD");
+  const [budget, setBudget] = useState(budgets[0]);
   const [projectDescription, setProjectDescription] = useState("");
 
   const submitForm = (e) => {
@@ -38,6 +39,20 @@ const Form = () => {
       budget,
       projectDescription,
     };
+    axios
+      .post("/get-quote", formData)
+      .then((res) => {
+        if (res.data.success) {
+          toast.success(res.data.message);
+        } else if (!res.data.success) {
+          toast.error(res.data.message);
+        } else {
+          toast.error("Something went wrong");
+        }
+      })
+      .catch((err) => {
+        toast.error("Something went wrong");
+      });
   };
 
   return (
