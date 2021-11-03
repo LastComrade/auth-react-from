@@ -56,7 +56,7 @@ const Form = () => {
   };
 
   return (
-    <div className="w-1/2 rounded-b-lg bg-gray-200 py-5 px-5 mx-auto">
+    <div className="w-11/12 md:w-4/6 sm:w-1/2 rounded-b-lg bg-gray-200 py-5 px-5 mx-auto">
       <form onSubmit={submitForm}>
         <div className="mb-6">
           <label
